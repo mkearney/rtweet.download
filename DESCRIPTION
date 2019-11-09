@@ -23,3 +23,5 @@ Imports:
     dapr,
     crayon,
     progress
+URL: https://github.com/mkearney/rtweet.recipes
+BugReports: https://github.com/mkearney/rtweet.recipes/issues
