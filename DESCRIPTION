@@ -1,13 +1,18 @@
 Package: rtweet.recipes
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Title: Robust Automation Recipes for Collecting Twitter Data
+Version: 0.0.1
+Authors@R: c(
+    person("Michael W.", "Kearney", ,
+      email = "kearneymw@missouri.edu", role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0002-0730-4694"))
+    ## add contributor template (middle name/initial optional)
+    #person("First Middle", "Last", ,
+    #email = "email@address.com", role = c("ctb"))
+    )
+Description: Tools and recipes for automating large scale collection of Twitter
+    data via 'rtweet' <https://rtweet.info>
+Depends:
+    R (>= 3.1.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

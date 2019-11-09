@@ -4,12 +4,13 @@
 \name{rtweet.recipes-package}
 \alias{rtweet.recipes}
 \alias{rtweet.recipes-package}
-\title{rtweet.recipes: What the Package Does (One Line, Title Case)}
+\title{rtweet.recipes: Robust Automation Recipes for Collecting Twitter Data}
 \description{
-What the package does (one paragraph).
+Tools and recipes for automating large scale collection of Twitter
+    data via 'rtweet' <https://rtweet.info>
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (YOUR-ORCID-ID)
+\strong{Maintainer}: Michael W. Kearney \email{kearneymw@missouri.edu} (0000-0002-0730-4694)
 
 }
 \keyword{internal}
