@@ -3,8 +3,9 @@ is_bearable <- function(token = NULL) {
     return(get.rr("bearable"))
   }
   token <- token %||% rtweet::get_token()
-  assign.rr(bearable = isTRUE(grepl("read-write", rtweet:::api_access_level(token))))
-  invisible()
+  bearable <- isTRUE(grepl("read-write", rtweet:::api_access_level(token)))
+  assign.rr(bearable = bearable)
+  bearable
 }
 
 current_token <- function() {

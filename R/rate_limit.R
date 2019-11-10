@@ -2,36 +2,69 @@
 
 
 ## function for: sleep until rate limit reset
-rate_limit_sleep <- function() {
-  if (!exists(".tkn")) {
-    .tkn      <<- get_token()
-  }
-  if (!exists(".rl_count")) {
-    .rl_count <<- 15 - rate_limit2("get_friends", token = .tkn)$remaining
-    .regtoken <<- TRUE
-  }
-  if (.rl_count < 14L) {
-    .rl_count <<- .rl_count + 1L
-    return(invisible())
-  }
-  if (.regtoken && is_bearable()) {
-    .tkn      <<- bearer_token()
-    .regtoken <<- FALSE
+fds_rate_limit_sleep <- function() {
+
+  ## .tkn = current token
+  if (!exists.rr(".tkn")) {
+    .tkn <- rtweet::get_token()
+    assign.rr(.tkn = .tkn)
   } else {
-    .tkn <<- get_token()
-    .regtoken <<- TRUE
+    .tkn <- get.rr(".tkn")
   }
-  rl          <- rate_limit2("get_friends", token = .tkn)
-  .rl_count   <<- 15 - rl$remaining
-  if (.rl_count < 15) {
+
+  ## .regtoken = whether user token or bearer token
+  if (inherits(.tkn, "bearer")) {
+    .regtoken <- FALSE
+  } else {
+    .regtoken <- TRUE
+  }
+  assign.rr(.regtoken = .regtoken)
+
+  ## .rl_fds_count = running count of friends requests (on current rate limit)
+  if (!exists.rr(".rl_fds_count")) {
+    rl <- rate_limit2("get_friends", token = .tkn)
+    .rl_fds_count <- 15L - rl[["remaining"]] %||% 0L
+    assign.rr(.rl_fds_count = .rl_fds_count)
+  } else {
+    .rl_fds_count <- get.rr(".rl_fds_count")
+  }
+
+  ## if .rl_fds_count is less than 14, continue
+  if (.rl_fds_count < 14L) {
+    .rl_fds_count <- .rl_fds_count + 1L
+    assign.rr(.rl_fds_count = .rl_fds_count)
     return(invisible())
   }
-  s <- as.numeric(difftime(rl$reset_at, Sys.time(), units = "secs"))
+
+  ## switch to bearer or user token (if possible)
+  if (.regtoken && is_bearable(.tkn)) {
+    .tkn <- rtweet::bearer_token(.tkn)
+    .regtoken <- FALSE
+  } else if (!.regtoken) {
+    .tkn <- rtweet::get_token()
+    .regtoken <- TRUE
+  }
+
+  ## get rate limit information
+  rl <- rate_limit2("get_friends", token = .tkn)
+  .rl_fds_count <- 15L - rl[["remaining"]] %||% 0L
+  assign.rr(.tkn  = .tkn)
+  assign.rr(.regtoken = .regtoken)
+
+  ## if remaining calls then continue
+  if (.rl_fds_count < 15) {
+    .rl_fds_count <- .rl_fds_count + 1L
+    assign.rr(.rl_fds_count = .rl_fds_count)
+    return(invisible())
+  }
+
+  ## otherwise sleep
+  s <- as.numeric(difftime(rl[["reset_at"]] %||% Sys.time() + 60 * 15, Sys.time(), units = "secs"))
+  assign.rr(.rl_fds_count = 15L)
   if (s < 0) {
     return(invisible())
   }
-  cat("Sleeping for about", round(s / 60, 2), "minutes...\n")
-  Sys.sleep(s + 1)
+  nap(s)
 }
 
 

@@ -31,6 +31,7 @@
 #' @export
 get_friends_recipe <- function(x, new = FALSE) {
   x <- unique(x[!is.na(x)])
+
   ## if new=TRUE ~~~ if .fds doesn't exist
   if (new || !exists.rr(".fds")) {
     .fds <- vector("list", length(x))
@@ -48,25 +49,28 @@ get_friends_recipe <- function(x, new = FALSE) {
   tusrs <- length(x)
   waiting("This should take around ", cint(tusrs / 15 * 15), " mins")
 
-  tryCatch({
-    ## for loop
-    for (i in seq_along(fds)) {
-      ## get friends list – and extract next cursor (page) value
-      .fds[[i]]   <- get_friends2(x[i])
-      np          <- next_cursor(.fds[[i]])
+  ## for loop
+  for (i in seq_along(.fds)) {
+    ## configure token and if nec. sleep until rate limit reset
+    fds_rate_limit_sleep()
 
-      ## if user follows more than 5,000 accounts, make additional calls using np
-      while (length(np) > 0 && np != 0) {
-        fdsi     <- get_friends2(x[i], page = np)
-        np       <- next_cursor(fdsi)
-        .fds[[i]] <- rbind(.fds[[i]], fdsi)
-      }
-      complete("Data collection total: ", cint(i),
-        " friends lists (", cint(i / tusrs * 100), "%)")
+    ## get friends list – and extract next cursor (page) value
+    .fds[[i]] <- get_friends2(x[i], token = get.rr(".tkn"))
+    assign.rr(.fds = .fds)
+    np <- next_cursor(.fds[[i]])
+
+    ## if user follows more than 5,000 accounts, make additional calls using np
+    while (length(np) > 0 && np != 0) {
+      fds_rate_limit_sleep()
+      fdsi <- get_friends2(x[i], page = np, token = get.rr(".tkn"))
+      np <- next_cursor(fdsi)
+      .fds[[i]] <- rbind(.fds[[i]], fdsi)
+      assign.rr(.fds = .fds)
     }
-    return(.fds)
-    },
-    error = function(e) .fds)
+    complete("Data collection total: ", cint(i),
+      " friends lists (", cint(i / tusrs * 100), "%)")
+  }
+  .fds
 }
 
 

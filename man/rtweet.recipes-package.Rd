@@ -9,6 +9,14 @@
 Tools and recipes for automating large scale collection of Twitter
     data via 'rtweet' <https://rtweet.info>
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/mkearney/rtweet.recipes}
+  \item Report bugs at \url{https://github.com/mkearney/rtweet.recipes/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Michael W. Kearney \email{kearneymw@missouri.edu} (0000-0002-0730-4694)
 
