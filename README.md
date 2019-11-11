@@ -26,18 +26,19 @@ And the development version from [GitHub](https://github.com/) with:
 remotes::install_github("mkearney/rtweet.download")
 ```
 
-## Friends lists
+## Friends IDs
 
-Twitter’s `"friends/list"` API endpoint is rate limited to 15 requests
-(or [15\*](#notes) friend lists) per 15 minutes. So while a single call
-using `rtweet::get_friends()` can retrieve friend lists for up to 15
-users, a single call using `rtweet.download::get_friends_download()` can
-retrieve friend lists for hundreds or even thousandsusers\!
+Twitter’s `"friends/ids"` API endpoint is rate limited to 15 requests
+(or the friend IDs of [15\*](#notes) accounts) per 15 minutes. So while
+a single call using `rtweet::get_friends()` can retrieve the friend IDs
+of up to 15 users, a single call using
+`rtweet.download::get_friends_download()` can retrieve the friend IDs of
+hundreds or even thousands of users\!
 
 |                                         |                          |
 | --------------------------------------- | ------------------------ |
 | **API Feature**                         | **Value**                |
-| <span> </span> Endpoint                 | `"friends/list"`         |
+| <span> </span> Endpoint                 | `"friends/ids"`          |
 | <span> </span> Rate limit (per 15 min.) | `15`                     |
 | <span> </span> Lists per request        | `1`[\*](#notes)          |
 | **R Package**                           | **Function**             |
@@ -45,26 +46,22 @@ retrieve friend lists for hundreds or even thousandsusers\!
 | <span> </span> {rtweet.download}        | `get_friends_download()` |
 
 The example below uses `get_friends_download()` to automate the
-collection of friends (accounts followed by) users on \[@Teradata's list
-of data science
+collection of friend (accounts followed by) IDs of users on
+\[@Teradata's list of data science
 influencers\](<https://twitter.com/Teradata/lists/data-science-influencers/members>).
 
 ``` r
-## get list of data science influencers
+## get members on data science influencers influence
 data_sci_influencers <- rtweet::lists_members(
   owner_user = "Teradata", slug = "data-science-influencers"
 )
 
-## download friend lists
+## download friend IDs for each user
 fds <- get_friends_download(data_sci_influencers$screen_name)
 
 ## preview data
 head(fds)
 ```
-
-While a single call of `rtweet::get_friends()` can retrieve up to 15
-friend lists, a single call of `get_friends_download()` can collect
-hundreds or even thousands of friend lists.
 
 ## Users data
 
@@ -98,8 +95,8 @@ head(fds)
 
 ## Notes
 
-\* The `"friends/list"` endpoint returns **a single list of up to 5,000
-friends**, so 15 requests can only return 15 complete friend lists if
-the 15 accounts all follow 5,000 or fewer accounts. To retrieve the
-complete list for users following more than 5,000 accounts, multiple
-requests (friends\_count / 5,000) are required.
+\* The `"friends/ids"` endpoint returns the **up to 5,000 friend IDs of
+a single user**, so 15 requests can only return all the friend IDs of 15
+users if all 15 of those users follow 5,000 or fewer accounts. To
+retrieve all the friend IDs for users following more than 5,000
+accounts, multiple requests (friends\_count / 5,000) are required.
