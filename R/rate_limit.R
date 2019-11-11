@@ -20,17 +20,16 @@ fds_rate_limit_sleep <- function() {
   }
   assign.rr(.regtoken = .regtoken)
 
-  ## .rl_fds_count = running count of friends requests (on current rate limit)
+  ## .rl_fds_count = running count of requests
   if (!exists.rr(".rl_fds_count")) {
     rl <- rate_limit2("get_friends", token = .tkn)
     .rl_fds_count <- 15L - rl[["remaining"]] %||% 0L
-    assign.rr(.rl_fds_count = .rl_fds_count)
   } else {
     .rl_fds_count <- get.rr(".rl_fds_count")
   }
 
   ## if .rl_fds_count is less than 14, continue
-  if (.rl_fds_count < 14L) {
+  if (.rl_fds_count < 15L) {
     .rl_fds_count <- .rl_fds_count + 1L
     assign.rr(.rl_fds_count = .rl_fds_count)
     return(invisible())
@@ -60,7 +59,7 @@ fds_rate_limit_sleep <- function() {
 
   ## otherwise sleep
   s <- as.numeric(difftime(rl[["reset_at"]] %||% Sys.time() + 60 * 15, Sys.time(), units = "secs"))
-  assign.rr(.rl_fds_count = 15L)
+  assign.rr(.rl_fds_count = 0L)
   if (s < 0) {
     return(invisible())
   }
@@ -69,12 +68,14 @@ fds_rate_limit_sleep <- function() {
 
 
 nap <- function(s) {
+  stoptime <- Sys.time() + s + 1L
   pb <- progress::progress_bar$new(
     format = crayon::blue("Sleeping    [:bar] :percent"),
     total = 60, clear = FALSE, width = 60)
   pb$tick(0)
   for (i in seq_len(60)) {
     Sys.sleep(s / 60)
+    if (Sys.time() > stoptime) break
     pb$tick()
   }
   invisible(TRUE)
