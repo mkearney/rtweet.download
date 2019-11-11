@@ -1,5 +1,5 @@
-Package: rtweet.recipes
-Title: Robust Automation Recipes for Collecting Twitter Data
+Package: rtweet.download
+Title: Automate Large Downloads with 'rtweet'
 Version: 0.0.1
 Authors@R: c(
     person("Michael W.", "Kearney", ,
@@ -9,8 +9,8 @@ Authors@R: c(
     #person("First Middle", "Last", ,
     #email = "email@address.com", role = c("ctb"))
     )
-Description: Tools and recipes for automating large scale collection of Twitter
-    data via 'rtweet' <https://rtweet.info>
+Description: Robust tools for automating large and/or time-consuming tasks
+    involving the collection of Twitter data via 'rtweet' <https://rtweet.info>
 Depends:
     R (>= 3.1.0)
 License: MIT + file LICENSE
@@ -23,5 +23,7 @@ Imports:
     dapr,
     crayon,
     progress
-URL: https://github.com/mkearney/rtweet.recipes
-BugReports: https://github.com/mkearney/rtweet.recipes/issues
+URL: https://github.com/mkearney/rtweet.download
+BugReports: https://github.com/mkearney/rtweet.download/issues
+Suggests: 
+    testthat (>= 2.1.0)
