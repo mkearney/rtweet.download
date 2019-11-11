@@ -58,7 +58,7 @@ fds_rate_limit_sleep <- function() {
   }
 
   ## otherwise sleep
-  s <- as.numeric(difftime(rl[["reset_at"]] %||% Sys.time() + 60 * 15, Sys.time(), units = "secs"))
+  s <- as.numeric(difftime(rl[["reset_at"]] %||% (Sys.time() + 60 * 15), Sys.time(), units = "secs"))
   assign.rr(.rl_fds_count = 0L)
   if (s < 0) {
     return(invisible())
@@ -68,7 +68,8 @@ fds_rate_limit_sleep <- function() {
 
 
 nap <- function(s) {
-  stoptime <- Sys.time() + s + 1L
+  stoptime <- Sys.time() + s
+  cat("Sleeping for", round(s / 60, 1), "mins...\n")
   pb <- progress::progress_bar$new(
     format = crayon::blue("Sleeping    [:bar] :percent"),
     total = 60, clear = FALSE, width = 60)
