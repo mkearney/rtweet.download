@@ -47,7 +47,12 @@ get_friends_recipe <- function(x, new = FALSE) {
     }
   }
   tusrs <- length(x)
-  waiting("This should take around ", cint(tusrs / 15 * 15), " mins")
+  if (is_bearable()) {
+    rlc <- 30
+  } else {
+    rlc <- 15
+  }
+  waiting("This should take around ", cint(tusrs / rlc * 15), " mins")
 
   ## for loop
   for (i in seq_along(.fds)) {
