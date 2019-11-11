@@ -40,7 +40,7 @@ remotes::install_github("mkearney/rtweet.download")
 
 ## Friends IDs
 
-Twitter's `"friends/ids"` API endpoint is rate limited to 15 requests (or the friend IDs of [15*](#notes) accounts) per 15 minutes. So while a single call using `rtweet::get_friends()` can retrieve the friend IDs of up to 15 users, a single call using `rtweet.download::get_friends_download()` can retrieve the friend IDs of hundreds or even thousands of users!
+Twitter's `"friends/ids"` API endpoint is rate limited to 15 requests (or the friend IDs of 15[*](#notes) accounts) per 15 minutes. So while a single call using `rtweet::get_friends()` can retrieve the friend IDs of up to 15 users, a single call using `rtweet.download::get_friends_download()` can retrieve the friend IDs of hundreds or even thousands of users!
 
 |                                              |                          |
 |----------------------------------------------|--------------------------|
@@ -52,7 +52,7 @@ Twitter's `"friends/ids"` API endpoint is rate limited to 15 requests (or the fr
 | <span>&nbsp;</span> {rtweet}                 | `get_friends()`          |
 | <span>&nbsp;</span> {rtweet.download}        | `get_friends_download()` |
 
-The example below uses `get_friends_download()` to automate the collection of friend (accounts followed by) IDs of users on [@Teradata's list of data science influencers](https://twitter.com/Teradata/lists/data-science-influencers/members).
+The example below uses `get_friends_download()` to automate the collection of friend (accounts followed by) IDs of users on [\@Teradata's list of data science influencers](https://twitter.com/Teradata/lists/data-science-influencers/members).
 
 ``` r
 ## get members on data science influencers influence
