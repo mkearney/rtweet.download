@@ -1,15 +1,6 @@
 
-## function for: rate-limit and error managing version of rtweet::get_friends
-# get_friends2 <- function(...) {
-#   rate_limit_sleep()
-#   tryCatch(get_friends(..., token = .tkn), error = function(e) {
-#     Sys.sleep(1)
-#     get_friends(..., token = .tkn)
-#   })
-# }
 
-
-#' Get friends recipe
+#' Get friends download
 #'
 #' Automate friends-list collection for a large number of users (via \code{\link[rtweet]{get_friends()}})
 #'
@@ -29,7 +20,7 @@
 #'   make 30 calls every 15 minutes. If the token cannot be used via bearer
 #'   authorization, then 15 calls are made every 15 minutes.
 #' @export
-get_friends_recipe <- function(x, new = FALSE) {
+get_friends_download <- function(x, new = FALSE) {
   x <- unique(x[!is.na(x)])
 
   ## if new=TRUE ~~~ if .fds doesn't exist

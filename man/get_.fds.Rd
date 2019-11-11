@@ -15,6 +15,6 @@ Retrieves '.fds' object created by \code{\link{get_friends_recipe}()} and stored
 rtweet.recipes's special built-in environment.
 }
 \seealso{
-Other .fds: \code{\link{get_friends_recipe}}
+Other .fds: \code{\link{get_friends_download}}
 }
 \concept{.fds}

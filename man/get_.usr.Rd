@@ -15,6 +15,6 @@ Retrieves '.usr' object created by \code{\link{lookup_users_recipe}()} and store
 rtweet.recipes's special built-in environment.
 }
 \seealso{
-Other .usr: \code{\link{lookup_users_recipe}}
+Other .usr: \code{\link{lookup_users_download}}
 }
 \concept{.usr}

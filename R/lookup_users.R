@@ -1,6 +1,6 @@
 
 
-#' Lookup users recipe
+#' Lookup users download
 #'
 #' Automate users data collection for a large number of users (via \code{\link[rtweet]{lookup_Users()}})
 #'
@@ -16,7 +16,7 @@
 #' @details This function attempts to lookup data for 90,000 users every 15
 #'   minutes, sleeping between calls until Twitter's API rate limit resets.
 #' @export
-lookup_users_recipe <- function(x, new = FALSE) {
+lookup_users_download <- function(x, new = FALSE) {
   x <- unique(x[!is.na(x)])
   ## if new=TRUE ~~~ if .usr doesn't exist
   if (new || !exists.rr(".usr")) {

@@ -2,6 +2,6 @@
 
 export(get_.fds)
 export(get_.usr)
-export(get_friends_recipe)
-export(lookup_users_recipe)
+export(get_friends_download)
+export(lookup_users_download)
 import(rtweet)
