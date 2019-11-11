@@ -29,9 +29,10 @@ remotes::install_github("mkearney/rtweet.download")
 ## Friends lists
 
 Twitter’s `"friends/list"` API endpoint is rate limited to 15 requests
-(or [15\*](#notes) friend lists) per 15 minutes. To automate the
-collection of 16+ (or hundreds or even thousands) friend lists, this
-package provides `get_friends_download()`
+(or [15\*](#notes) friend lists) per 15 minutes. So while a single call
+using `rtweet::get_friends()` can retrieve friend lists for up to 15
+users, a single call using `rtweet.download::get_friends_download()` can
+retrieve friend lists for hundreds or even thousandsusers\!
 
 |                                         |                          |
 | --------------------------------------- | ------------------------ |
@@ -44,7 +45,9 @@ package provides `get_friends_download()`
 | <span> </span> {rtweet.download}        | `get_friends_download()` |
 
 The example below uses `get_friends_download()` to automate the
-collection of friend lists for 90+ data science influencers.
+collection of friends (accounts followed by) users on \[@Teradata's list
+of data science
+influencers\](<https://twitter.com/Teradata/lists/data-science-influencers/members>).
 
 ``` r
 ## get list of data science influencers
@@ -66,9 +69,10 @@ hundreds or even thousands of friend lists.
 ## Users data
 
 Twitter’s `"users/lookup"` API endpoint is rate limited to 900 requests
-(or 90,000 users) per 15 minutes. To automate the collection of 901+ (or
-hundreds or even thousands) friend lists, this package provides
-`get_friends_download()`
+(or 90,000 users) per 15 minutes. So while a single call using
+`rtweet::lookup_users()` can retrieve data on up to 90,000 users, a
+single call using `rtweet.download::lookup_users_download()` can collect
+data on hundreds of thousands or even millions of users\!
 
 |                                         |                           |
 | --------------------------------------- | ------------------------- |
@@ -80,17 +84,9 @@ hundreds or even thousands) friend lists, this package provides
 | <span> </span> {rtweet}                 | `lookup_users()`          |
 | <span> </span> {rtweet.download}        | `lookup_users_download()` |
 
-The example below uses `lookup_users_download()` to automate the
-collection of users data of data science influencers. With this function
-it’s possible to collect hundreds or even thousands of friend lists with
-a single line of code:
-
-The example below uses `lookup_users_download()` to automate the
-collection of users data for 100,000+ accounts followed by data science
-influencers. While a single call of `rtweet::lookup_users()` can
-retrieve data on up to 90,000 users, a single call of
-`lookup_users_download()` can collect data on hundreds of thousands or
-even millions of users.
+The example below uses `lookup_users_download()` to automate data
+collection for the previously collected accounts followed by data
+science influencers.
 
 ``` r
 ## download users data
