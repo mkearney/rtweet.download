@@ -13,11 +13,7 @@ fds_rate_limit_sleep <- function() {
   }
 
   ## .regtoken = whether user token or bearer token
-  if (inherits(.tkn, "bearer")) {
-    .regtoken <- FALSE
-  } else {
-    .regtoken <- TRUE
-  }
+  .regtoken <- !inherits(.tkn, "bearer")
   assign.rr(.regtoken = .regtoken)
 
   ## .rl_fds_count = running count of requests
