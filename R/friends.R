@@ -27,14 +27,14 @@ get_friends_download <- function(x, new = FALSE) {
   if (new || !exists.rr(".fds")) {
     .fds <- vector("list", length(x))
     assign.rr(.fds = .fds)
-    check("Create `.fds` in `.rr` environment")
+    complete("Create `.fds` in `.rr` environment")
   } else if (exists.rr(".fds")) {
     ## if .fds does exists, ignore any users w/ data already collected
     .fds <- get.rr(".fds")
     dr <- x %in% unlist(lapply(.fds, "[[", "user"))
     if (any(dr)) {
       x <- x[!dr]
-      check("Omit ", cint(sum(dr)), " friends lists already collected")
+      complete("Omit ", cint(sum(dr)), " friends lists already collected")
     }
   }
   tusrs <- length(x)
@@ -63,8 +63,8 @@ get_friends_download <- function(x, new = FALSE) {
       .fds[[i]] <- rbind(.fds[[i]], fdsi)
       assign.rr(.fds = .fds)
     }
-    complete("Data collection total: ", cint(i),
-      " friends lists (", cint(i / tusrs * 100), "%)")
+    complete("Collected friend IDs for ",
+      cint(i, sp = nchar(tusrs)), " users (", cint(i / tusrs * 100), "%)")
   }
   .fds
 }

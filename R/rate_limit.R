@@ -23,15 +23,21 @@ fds_rate_limit_sleep <- function() {
   ## .rl_fds_count = running count of requests
   if (!exists.rr(".rl_fds_count")) {
     rl <- rate_limit2("get_friends", token = .tkn)
-    .rl_fds_count <- 15L - rl[["remaining"]] %||% 0L
+    .rl_fds_count <- 15L - (rl[["remaining"]] %||% 0L)
+    .rl_reset_at <- rl[["reset_at"]] %||% (Sys.time() + 60 * 15)
   } else {
     .rl_fds_count <- get.rr(".rl_fds_count")
+    .rl_reset_at <- get.rr(".rl_reset_at")
+  }
+  if (Sys.time() > .rl_reset_at) {
+    .rl_fds_count <- 0L
   }
 
-  ## if .rl_fds_count is less than 14, continue
+  ## if .rl_fds_count is less than 15 continue
   if (.rl_fds_count < 15L) {
     .rl_fds_count <- .rl_fds_count + 1L
     assign.rr(.rl_fds_count = .rl_fds_count)
+    assign.rr(.rl_reset_at = .rl_reset_at)
     return(invisible())
   }
 
@@ -46,9 +52,11 @@ fds_rate_limit_sleep <- function() {
 
   ## get rate limit information
   rl <- rate_limit2("get_friends", token = .tkn)
-  .rl_fds_count <- 15L - rl[["remaining"]] %||% 0L
+  .rl_fds_count <- 15L - (rl[["remaining"]] %||% 0L)
+  .rl_reset_at <- rl[["reset_at"]] %||% (Sys.time() + 60 * 15)
   assign.rr(.tkn  = .tkn)
   assign.rr(.regtoken = .regtoken)
+  assign.rr(.rl_reset_at = .rl_reset_at)
 
   ## if remaining calls then continue
   if (.rl_fds_count < 15) {
@@ -58,8 +66,10 @@ fds_rate_limit_sleep <- function() {
   }
 
   ## otherwise sleep
-  s <- as.numeric(difftime(rl[["reset_at"]] %||% (Sys.time() + 60 * 15), Sys.time(), units = "secs"))
-  assign.rr(.rl_fds_count = 0L)
+  s <- as.numeric(difftime(rl[["reset_at"]] %||% (Sys.time() + 60 * 15),
+    Sys.time(), units = "secs"))
+  assign.rr(.rl_fds_count = 1L)
+  assign.rr(.rl_reset_at = Sys.time() + 60 * 15)
   if (s < 0) {
     return(invisible())
   }
@@ -72,10 +82,10 @@ nap <- function(s) {
   cat("Sleeping for", round(s / 60, 1), "mins...\n")
   pb <- progress::progress_bar$new(
     format = crayon::blue("Sleeping    [:bar] :percent"),
-    total = 60, clear = FALSE, width = 60)
+    total = 100, clear = FALSE, width = 60)
   pb$tick(0)
-  for (i in seq_len(60)) {
-    Sys.sleep(s / 60)
+  for (i in seq_len(100)) {
+    Sys.sleep(s / 100)
     if (Sys.time() > stoptime) break
     pb$tick()
   }

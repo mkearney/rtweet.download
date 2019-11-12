@@ -14,12 +14,11 @@ cat_call <- function(usrs, tml, i) {
 check <- function(..., fill = TRUE) {
   cat(paste0(crayon::green("✔ "), ...), fill = fill)
 }
-begin <- function(..., fill = TRUE) {
-  cat(paste0("🎬 ", ...), fill = fill)
-}
+
 complete <- function(..., fill = TRUE) {
-  cat(paste0("🏁 ", ...), fill = fill)
+  cat(paste0(crayon::green(clisymbols::symbol$tick), " ", ...), fill = fill)
 }
+
 waiting <- function(..., fill = TRUE) {
   cat(paste0("⏱ ", ...), fill = fill)
 }
