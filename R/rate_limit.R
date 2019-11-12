@@ -78,7 +78,6 @@ fds_rate_limit_sleep <- function() {
 
 
 nap <- function(s) {
-  stoptime <- Sys.time() + s
   cat("Sleeping for", round(s / 60, 1), "mins...\n")
   pb <- progress::progress_bar$new(
     format = crayon::blue("Sleeping    [:bar] :percent"),
@@ -86,7 +85,6 @@ nap <- function(s) {
   pb$tick(0)
   for (i in seq_len(100)) {
     Sys.sleep(s / 100)
-    if (Sys.time() > stoptime) break
     pb$tick()
   }
   invisible(TRUE)
