@@ -22,6 +22,15 @@
 #' @export
 get_friends_download <- function(x, new = FALSE) {
   x <- unique(x[!is.na(x)])
+  if (all(grepl("^\\d+$", x))) {
+    ul <- lookup_users2(x)
+    sns <- ul$screen_name[match(x, ul$user_id)]
+    sns <- ifelse(is.na(sns), ul, paste0("@", sns))
+  } else {
+    sns <- paste0("@", x)
+  }
+  mchars <- max(nchar(sns))
+  sns <- paste0(dapr::vap_chr(mchars - nchar(sns), ~ paste0(rep(" ", .x), collapse = "")), sns)
 
   ## if new=TRUE ~~~ if .fds doesn't exist
   if (new || !exists.rr(".fds")) {
@@ -43,7 +52,7 @@ get_friends_download <- function(x, new = FALSE) {
   } else {
     rlc <- 15
   }
-  waiting("This should take around ", cint(tusrs / rlc * 15), " mins")
+  cat_line("This should take around ", cdbl(tusrs / rlc * 15), " mins")
   n <- 0L
 
   ## for loop
@@ -52,16 +61,8 @@ get_friends_download <- function(x, new = FALSE) {
       n <- fds_rate_limit_sleep()
     }
 
-    if (inherits(get.rr(".tkn"), "bearer")) {
-      rl <- rate_limit2("get_friends", token = get.rr(".tkn"))
-      cat("using bearer token with", rl$remaining, "remaining\n")
-    } else {
-      rl <- rate_limit2("get_friends", token = get.rr(".tkn"))
-      cat("using user token with", rl$remaining, "remaining\n")
-    }
-
     ## get friends list – and extract next cursor (page) value
-    .fds[[i]] <- get_friends2(x[i], token = get.rr(".tkn"))
+    .fds[[i]] <- get_friends_warning_nap(x[i], token = get.rr(".tkn"))
     n <- n - 1L
     assign.rr(.fds = .fds)
     np <- next_cursor(.fds[[i]])
@@ -72,22 +73,14 @@ get_friends_download <- function(x, new = FALSE) {
         n <- fds_rate_limit_sleep()
       }
 
-      if (inherits(get.rr(".tkn"), "bearer")) {
-        rl <- rate_limit2("get_friends", token = get.rr(".tkn"))
-        cat("using bearer token with", rl$remaining, "remaining\n")
-      } else {
-        rl <- rate_limit2("get_friends", token = get.rr(".tkn"))
-        cat("using user token with", rl$remaining, "remaining\n")
-      }
-
-      fdsi <- get_friends2(x[i], page = np, token = get.rr(".tkn"))
+      fdsi <- get_friends_warning_nap(x[i], page = np, token = get.rr(".tkn"))
       n <- n - 1L
       np <- next_cursor(fdsi)
       .fds[[i]] <- rbind(.fds[[i]], fdsi)
       assign.rr(.fds = .fds)
     }
-    complete("Collected friend IDs for ",
-      cint(i, sp = nchar(tusrs)), " users (", cint(i / tusrs * 100), "%)")
+    complete("Collected ", cint(NROW(.fds[[i]])), " friend IDs for ", sns[i],
+      " (", cdbl(i / tusrs * 100, "11.1"), "%)")
   }
   .fds
 }

@@ -137,13 +137,12 @@ fds_rate_limit_sleep_ <- function() {
 
 
 nap <- function(s) {
-  cat("Rate limit reset in", round(s / 60, 1), "mins...\n")
   pb <- progress::progress_bar$new(
-    format = crayon::blue("Sleeping    [:bar] :percent"),
-    total = 100, clear = FALSE, width = 60)
+    format = crayon::blue("Sleeping [:bar] :eta"),
+    total = 1000, clear = TRUE, width = 60)
   pb$tick(0)
-  for (i in seq_len(100)) {
-    Sys.sleep(s / 100)
+  for (i in seq_len(1000)) {
+    Sys.sleep(s / 1000)
     pb$tick()
   }
   invisible(TRUE)
