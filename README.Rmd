@@ -15,9 +15,11 @@ library(rtweet.download)
 options(width = 90)
 ```
 
-# rtweet.download
+# rtweet <img src="man/figures/logo.png" width="160px" align="right" />
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/rtweet.download)](https://CRAN.R-project.org/package=rtweet.download)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 Robust tools for automating large and/or time-consuming tasks involving the collection of Twitter data via [**{rtweet}**](https://rtweet.info).
@@ -47,7 +49,7 @@ Twitter's `"friends/ids"` API endpoint is rate limited to 15 requests (or the fr
 | **API Feature**                              | **Value**                |
 | <span>&nbsp;</span> Endpoint                 | `"friends/ids"`          |
 | <span>&nbsp;</span> Rate limit (per 15 min.) | `15`                     |
-| <span>&nbsp;</span> Lists per request        | `1`[*](#notes)           |
+| <span>&nbsp;</span> Friends per request      | `5000`[*](#notes)        |
 | **R Package**                                | **Function**             |
 | <span>&nbsp;</span> {rtweet}                 | `get_friends()`          |
 | <span>&nbsp;</span> {rtweet.download}        | `get_friends_download()` |

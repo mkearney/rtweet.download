@@ -6,6 +6,8 @@
 \alias{rtweet.download-package}
 \title{rtweet.download: Automate Large Downloads with 'rtweet'}
 \description{
+\if{html}{\figure{logo.png}{options: align='right'}}
+
 Robust tools for automating large and/or time-consuming tasks
     involving the collection of Twitter data via 'rtweet' <https://rtweet.info>
 }

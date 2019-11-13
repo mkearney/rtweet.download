@@ -34,7 +34,7 @@ get_friends_download <- function(x, new = FALSE) {
     dr <- x %in% unlist(lapply(.fds, "[[", "user"))
     if (any(dr)) {
       x <- x[!dr]
-      complete("Omit ", cint(sum(dr)), " friends lists already collected")
+      complete("Omit ", cint(sum(dr)), " users with friends already collected")
     }
   }
   tusrs <- length(x)
@@ -44,21 +44,44 @@ get_friends_download <- function(x, new = FALSE) {
     rlc <- 15
   }
   waiting("This should take around ", cint(tusrs / rlc * 15), " mins")
+  n <- 0L
 
   ## for loop
   for (i in seq_along(.fds)) {
-    ## configure token and if nec. sleep until rate limit reset
-    fds_rate_limit_sleep()
+    if (n == 0) {
+      n <- fds_rate_limit_sleep()
+    }
+
+    if (inherits(get.rr(".tkn"), "bearer")) {
+      rl <- rate_limit2("get_friends", token = get.rr(".tkn"))
+      cat("using bearer token with", rl$remaining, "remaining\n")
+    } else {
+      rl <- rate_limit2("get_friends", token = get.rr(".tkn"))
+      cat("using user token with", rl$remaining, "remaining\n")
+    }
 
     ## get friends list – and extract next cursor (page) value
     .fds[[i]] <- get_friends2(x[i], token = get.rr(".tkn"))
+    n <- n - 1L
     assign.rr(.fds = .fds)
     np <- next_cursor(.fds[[i]])
 
     ## if user follows more than 5,000 accounts, make additional calls using np
     while (length(np) > 0 && np != 0) {
-      fds_rate_limit_sleep()
+      if (n == 0) {
+        n <- fds_rate_limit_sleep()
+      }
+
+      if (inherits(get.rr(".tkn"), "bearer")) {
+        rl <- rate_limit2("get_friends", token = get.rr(".tkn"))
+        cat("using bearer token with", rl$remaining, "remaining\n")
+      } else {
+        rl <- rate_limit2("get_friends", token = get.rr(".tkn"))
+        cat("using user token with", rl$remaining, "remaining\n")
+      }
+
       fdsi <- get_friends2(x[i], page = np, token = get.rr(".tkn"))
+      n <- n - 1L
       np <- next_cursor(fdsi)
       .fds[[i]] <- rbind(.fds[[i]], fdsi)
       assign.rr(.fds = .fds)

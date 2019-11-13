@@ -1,8 +1,71 @@
+fds_rate_limit_sleep <- function() {
+  ## .tkn = current token
+  if (!exists.rr(".tkn")) {
+    .tkn <- rtweet::get_token()
+    assign.rr(.tkn = .tkn)
+  } else {
+    .tkn <- get.rr(".tkn")
+  }
+  rl <- rate_limit2("get_friends", token = .tkn)
+  rlm <- (rl[["remaining"]] %||% 0L)
+  if (rlm > 0) {
+    return(rlm)
+  }
+  if (rlm == 0 && !inherits(.tkn, "bearer") && is_bearable(.tkn)) {
+    .btkn <- rtweet::bearer_token(.tkn)
+    rlb <- rate_limit2("get_friends", token = .btkn)
+    rlbm <- (rlb[["remaining"]] %||% 0L)
+    if (rlbm > 0) {
+      assign.rr(.tkn = .btkn)
+      return(rlbm)
+    }
+    rlra <- as.numeric(rl[["reset"]] %||% 900, "secs")
+    rlbra <- as.numeric(rlb[["reset"]] %||% 900, "secs")
+    if (rlra <= rlbra) {
+      s <- rlra
+      assign.rr(.tkn = .tkn)
+    } else {
+      s <- rlbra
+      assign.rr(.tkn = .btkn)
+    }
+    if (s < 0) {
+      s <- 900
+    }
+    nap(s + 1)
+    return(15L)
+  }
 
+  if (rlm == 0 && inherits(.tkn, "bearer")) {
+    .btkn <- rtweet::get_token()
+    rlb <- rate_limit2("get_friends", token = .btkn)
+    rlbm <- (rlb[["remaining"]] %||% 0L)
+    if (rlbm > 0) {
+      assign.rr(.tkn = .btkn)
+      return(rlbm)
+    }
+    rlra <- as.numeric(rl[["reset"]] %||% 900, "secs")
+    rlbra <- as.numeric(rlb[["reset"]] %||% 900, "secs")
+    if (rlra <= rlbra) {
+      s <- rlra
+      assign.rr(.tkn = .tkn)
+    } else {
+      s <- rlbra
+      assign.rr(.tkn = .btkn)
+    }
+    if (s < 0) {
+      s <- 900
+    }
+    nap(s + 1)
+    return(15L)
+  }
+  s <- as.numeric(rl[["reset"]] %||% 900, "secs")
+  nap(s + 1L)
+  15L
+}
 
 
 ## function for: sleep until rate limit reset
-fds_rate_limit_sleep <- function() {
+fds_rate_limit_sleep_ <- function() {
 
   ## .tkn = current token
   if (!exists.rr(".tkn")) {
@@ -74,7 +137,7 @@ fds_rate_limit_sleep <- function() {
 
 
 nap <- function(s) {
-  cat("Sleeping for", round(s / 60, 1), "mins...\n")
+  cat("Rate limit reset in", round(s / 60, 1), "mins...\n")
   pb <- progress::progress_bar$new(
     format = crayon::blue("Sleeping    [:bar] :percent"),
     total = 100, clear = FALSE, width = 60)

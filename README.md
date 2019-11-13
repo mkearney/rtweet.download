@@ -1,10 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# rtweet.download
+# rtweet <img src="man/figures/logo.png" width="160px" align="right" />
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/rtweet.download)](https://CRAN.R-project.org/package=rtweet.download)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 Robust tools for automating large and/or time-consuming tasks involving
@@ -40,7 +44,7 @@ hundreds or even thousands of users\!
 | **API Feature**                         | **Value**                |
 | <span> </span> Endpoint                 | `"friends/ids"`          |
 | <span> </span> Rate limit (per 15 min.) | `15`                     |
-| <span> </span> Lists per request        | `1`[\*](#notes)          |
+| <span> </span> Friends per request      | `5000`[\*](#notes)       |
 | **R Package**                           | **Function**             |
 | <span> </span> {rtweet}                 | `get_friends()`          |
 | <span> </span> {rtweet.download}        | `get_friends_download()` |
