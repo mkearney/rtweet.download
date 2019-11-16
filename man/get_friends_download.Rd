@@ -4,23 +4,21 @@
 \alias{get_friends_download}
 \title{Get friends download}
 \usage{
-get_friends_download(x, new = FALSE)
+get_friends_download(x, .fds = NULL)
 }
 \arguments{
 \item{x}{A vector of user IDs or screen names for which friends lists will be
 retrieved. See details for more information about how this works.}
 
-\item{new}{Logical indicating whether to start a new data collection–if FALSE,
-the default, then this function will pick up where any previous in-session
-calls left off.}
+\item{.fds}{Optionally supply a preexisting output vector (like that returned
+by this function)–if NULL, the default, this function will start fresh.}
 }
 \value{
-Returns a list of friends lists; this list can be retrieved via
-\code{\link{get_.fds()}} even if an error occurs (and the R session wasn't
-restarted).
+Returns a list data frames with user and friend ID information
 }
 \description{
-Automate friends-list collection for a large number of users (via \code{\link[rtweet]{get_friends()}})
+Automate friends-list collection for a large number of users (via
+\code{\link[rtweet]{get_friends()}})
 }
 \details{
 This function attempts to retrieve friends lists for 15-30 users
@@ -29,8 +27,5 @@ resets. If your API token is linked to your own Twitter APP and has
 appropriate permissions to create a 'bearer token', then this function will
 make 30 calls every 15 minutes. If the token cannot be used via bearer
 authorization, then 15 calls are made every 15 minutes.
-}
-\seealso{
-Other .fds: \code{\link{get_.fds}}
 }
 \concept{.fds}

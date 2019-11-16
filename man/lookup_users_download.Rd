@@ -4,29 +4,24 @@
 \alias{lookup_users_download}
 \title{Lookup users download}
 \usage{
-lookup_users_download(x, new = FALSE)
+lookup_users_download(x, .usr = NULL)
 }
 \arguments{
 \item{x}{A vector of user IDs or screen names for which data will be looked up.
 See details for more information about how this works.}
 
-\item{new}{Logical indicating whether to start a new data collection–if FALSE,
-the default, then this function will pick up where any previous in-session
-calls left off.}
+\item{.usr}{Optionally supply a preexisting output vector (like that returned
+by this function)–if NULL, the default, this function will start fresh.}
 }
 \value{
-Returns a list of users data; this list can be retrieved via
-\code{\link{get_.usr()}} even if an error occurs (and the R session wasn't
-restarted).
+Returns a list data frames of user data
 }
 \description{
-Automate users data collection for a large number of users (via \code{\link[rtweet]{lookup_Users()}})
+Automate users data collection for a large number of users (via
+\code{\link[rtweet]{lookup_users()}})
 }
 \details{
 This function attempts to lookup data for 90,000 users every 15
 minutes, sleeping between calls until Twitter's API rate limit resets.
-}
-\seealso{
-Other .usr: \code{\link{get_.usr}}
 }
 \concept{.usr}

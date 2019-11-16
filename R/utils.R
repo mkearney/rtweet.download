@@ -13,6 +13,15 @@ complete <- function(..., fill = TRUE) {
   cat(paste0(crayon::green(clisymbols::symbol$tick), " ", ...), fill = fill)
 }
 
+info <- function(..., fill = TRUE) {
+  cat(paste0(crayon::magenta(clisymbols::symbol$info), " ", ...), fill = fill)
+}
+
+this <- function(..., fill = TRUE) {
+  cat(paste0(crayon::blue(clisymbols::symbol$arrow_right), " ", ...), fill = fill)
+}
+
+
 cat_line <- function(...) {
   cat(paste0(..., "\n"), sep = "")
 }
@@ -68,3 +77,71 @@ cint <- function(x, f = "1") {
   x <- format_int(x, f)
   use_commas_int(x)
 }
+repc <- function(x, n, collapse = "") paste(rep(x, n), collapse = collapse)
+
+
+assert_that <- function(..., env = parent.frame(), msg = NULL) {
+  res <- see_if(..., env = env, msg = msg)
+  if (res) return(TRUE)
+
+  stop(assert_error(attr(res, "msg")))
+}
+
+assert_error <- function (message, call = NULL) {
+  class <- c("assert_error", "simpleError", "error", "condition")
+  structure(list(message = message, call = call), class = class)
+}
+
+capture_dots <- function(...) {
+  eval(substitute(alist(...)), envir = parent.frame())
+}
+
+pretty_dots <- function(...) {
+  dots <- capture_dots(...)
+  if (length(dots) == 0) {
+    return(NULL)
+  }
+  if (is.null(names(dots))) {
+    names(dots) <- expr_names(dots)
+  }
+  nms <- names(dots)
+  if ("" %in% nms) {
+    names(dots)[nms == ""] <- expr_names(dots[nms == ""])
+  }
+  dots
+}
+
+expr_names <- function(args) {
+  vapply(args, deparse, USE.NAMES = FALSE, FUN.VALUE = character(1))
+}
+
+mmap <- function(f, ...) {
+  f <- match.fun(f)
+  mapply(FUN = f, ..., SIMPLIFY = FALSE, USE.NAMES = FALSE)
+}
+
+
+`%||%` <- function(x, y) {
+  if (is_null(x))
+    y
+  else x
+}
+
+is_null <- function(x) length(x) == 0L
+
+is_bearable <- function(token = NULL) {
+  if (exists.rr("bearable")) {
+    return(get.rr("bearable"))
+  }
+  token <- token %||% rtweet::get_token()
+  bearable <- isTRUE(grepl("read-write", rtweet:::api_access_level(token)))
+  assign.rr(bearable = bearable)
+  bearable
+}
+
+
+is_bearer <- function(x) inherits(x, "bearer")
+
+is_usertoken <- function(x) inherits(x, "Token")
+
+not_token <- function(x) is.list(x) && !is_bearable(x) && !is_usertoken(x)
