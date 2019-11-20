@@ -4,7 +4,7 @@
 \alias{get_friends_download}
 \title{Get friends download}
 \usage{
-get_friends_download(x, .fds = NULL)
+get_friends_download(x, .fds = NULL, verbose = TRUE)
 }
 \arguments{
 \item{x}{A vector of user IDs or screen names for which friends lists will be
@@ -12,6 +12,9 @@ retrieved. See details for more information about how this works.}
 
 \item{.fds}{Optionally supply a preexisting output vector (like that returned
 by this function)–if NULL, the default, this function will start fresh.}
+
+\item{verbose}{Whether the function should print information/status updates,
+defaults to TRUE. Setting this to FALSE will silent most printing.}
 }
 \value{
 Returns a list data frames with user and friend ID information

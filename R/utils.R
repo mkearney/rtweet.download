@@ -1,20 +1,14 @@
 
-cat_call <- function(usrs, tml, i) {
-  if (nchar(usrs[i]) < max(nchar(usrs))) {
-    sp <- paste(rep(" ", max(nchar(usrs)) - nchar(usrs[i])), collapse = "")
-  } else {
-    sp <- ""
-  }
-  cat(paste0(usrs[i], sp, ":"), sub("(?<=\\d)(?=\\d{3}$)", ",",
-    sprintf("%4d", NROW(tml[[i]])), perl = TRUE), "tweets\n")
-}
-
 complete <- function(..., fill = TRUE) {
   cat(paste0(crayon::green(clisymbols::symbol$tick), " ", ...), fill = fill)
 }
 
 info <- function(..., fill = TRUE) {
   cat(paste0(crayon::magenta(clisymbols::symbol$info), " ", ...), fill = fill)
+}
+
+dotdotdot <- function(..., fill = TRUE) {
+  cat(paste0(crayon::magenta(clisymbols::symbol$ellipsis), " ", ...), fill = fill)
 }
 
 this <- function(..., fill = TRUE) {
@@ -129,19 +123,12 @@ mmap <- function(f, ...) {
 
 is_null <- function(x) length(x) == 0L
 
-is_bearable <- function(token = NULL) {
-  if (exists.rr("bearable")) {
-    return(get.rr("bearable"))
-  }
-  token <- token %||% rtweet::get_token()
-  bearable <- isTRUE(grepl("read-write", rtweet:::api_access_level(token)))
-  assign.rr(bearable = bearable)
-  bearable
-}
-
-
-is_bearer <- function(x) inherits(x, "bearer")
+rd_timestamp <- function() format(Sys.time(), "%b %d %H:%M:%S")
 
 is_usertoken <- function(x) inherits(x, "Token")
 
 not_token <- function(x) is.list(x) && !is_bearable(x) && !is_usertoken(x)
+
+n_row <- function(...) {
+  NROW(tryCatch(..., error = function(e) NULL))
+}
