@@ -4,7 +4,7 @@
 \alias{get_friends_download}
 \title{Get friends download}
 \usage{
-get_friends_download(x, .fds = NULL, verbose = TRUE)
+get_friends_download(x, .fds = NULL, verbose = TRUE, sns = NULL)
 }
 \arguments{
 \item{x}{A vector of user IDs or screen names for which friends lists will be

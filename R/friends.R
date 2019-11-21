@@ -39,6 +39,7 @@ get_friends_download <- function(x, .fds = NULL, verbose = TRUE, sns = NULL) {
   ## if .fds is not supplied
   if (is_null(.fds)) {
     .fds <- vector("list", length(x))
+    tusrsp <- length(x)
   } else {
     ## if .fds is supplied, ignore any users w/ data already collected
     dr <- x %in% unlist(lapply(.fds, "[[", "user"))
@@ -47,6 +48,7 @@ get_friends_download <- function(x, .fds = NULL, verbose = TRUE, sns = NULL) {
       sns <- sns[!dr]
       complete("Omit ", cint(sum(dr)), " users with friends already collected")
     }
+    tusrsp <- length(x)
   }
   tusrs <- length(x)
   if (is_bearable()) {
@@ -95,7 +97,7 @@ get_friends_download <- function(x, .fds = NULL, verbose = TRUE, sns = NULL) {
         complete(rd_timestamp(),
           " ", cint(n_row(.fds[[i]]), "100,000"),
           " friend IDs for ", sns[i],
-          " (", cdbl(i / tusrs * 100, "11.1"), "%)")
+          " (", cdbl(i / tusrsp * 100, "11.1"), "%)")
       }
 
     }

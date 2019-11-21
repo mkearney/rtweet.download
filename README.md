@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# rtweet <img src="man/figures/logo.png" width="160px" align="right" />
+# rtweet.download <img src="man/figures/logo.png" width="160px" align="right" />
 
 <!-- badges: start -->
 
@@ -11,8 +11,8 @@ status](https://www.r-pkg.org/badges/version/rtweet.download)](https://CRAN.R-pr
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-Robust tools for automating large and/or time-consuming tasks involving
-the collection of Twitter data via [**{rtweet}**](https://rtweet.info).
+Automating the collection of Twitter data (via
+[**{rtweet}**](https://rtweet.info))
 
 ## Installation
 
