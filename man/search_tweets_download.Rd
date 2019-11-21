@@ -8,14 +8,14 @@ search_tweets_download(q, n, ..., .stw = NULL)
 }
 \arguments{
 \item{q}{Search query to be used to find matching tweets from the past 6-9
-days. See \code{\link[rtweet]{search_tweets()}}) for more information on
+days. See \code{\link[rtweet]{search_tweets}}) for more information on
 Twitter search query syntax.}
 
 \item{n}{Number of desired tweets to return. See details for more information
 about relevant rate limits.}
 
 \item{...}{Other parameters are passed to
-\code{\link[rtweet]{search_tweets()}}).}
+\code{\link[rtweet]{search_tweets}}).}
 
 \item{.stw}{Optionally supply a preexisting output vector (like that returned
 by this function)–if NULL, the default, this function will start fresh.}
@@ -25,7 +25,7 @@ Returns a list data frames of search data
 }
 \description{
 Automate the data collection for large Twitter searches (via
-\code{\link[rtweet]{search_tweets()}})
+\code{\link[rtweet]{search_tweets}})
 }
 \details{
 This function attempts to search and collect data for up to 18,000

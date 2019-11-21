@@ -10,7 +10,7 @@ Authors@R: c(
     #email = "email@address.com", role = c("ctb"))
     )
 Description: Robust tools for automating large and/or time-consuming tasks
-    involving the collection of Twitter data via 'rtweet' <https://rtweet.info>
+    involving the collection of Twitter data via 'rtweet' <https://rtweet.info>.
 Depends:
     R (>= 3.1.0)
 License: MIT + file LICENSE
@@ -22,7 +22,11 @@ Imports:
     rtweet,
     dapr,
     crayon,
-    progress
+    progress,
+    tidyselect,
+    clisymbols,
+    tfse,
+    tibble
 URL: https://github.com/mkearney/rtweet.download
 BugReports: https://github.com/mkearney/rtweet.download/issues
 Suggests: 

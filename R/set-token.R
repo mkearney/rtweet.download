@@ -20,7 +20,7 @@
 #' #pat <- "/path/to/rtweet-token.rds"
 #'
 #' ## and then set the token for use for the remainder of the session
-#' set_token(pat)
+#' #set_token(pat)
 #'
 #' @export
 set_token <- function(x) {
@@ -37,21 +37,21 @@ set_token.character <- function(x) {
   )
   Sys.setenv(TWITTER_PAT = x)
   complete("Environment variable set: 'TWITTER_PAT=" %P% x, "'")
-  invisible(token)
+  invisible(readRDS(x))
 }
 
 #' @export
 set_token.Token <- function(x) {
-  saveRDS(x, ".rtweet_token")
-  Sys.setenv(".rtweet_token")
-  complete("Token saved and environment variable set: 'TWITTER_PAT=.rtweet_token'")
+  saveRDS(x, ".rtweet_token.rds")
+  Sys.setenv(TWITTER_PAT = ".rtweet_token.rds")
+  complete("Token saved and environment variable set: 'TWITTER_PAT=.rtweet_token.rds'")
   invisible(x)
 }
 
 #' @export
 set_token.bearer <- function(x) {
-  saveRDS(x, ".rtweet_token")
-  Sys.setenv(".rtweet_token")
-  complete("Token saved and environment variable set: 'TWITTER_PAT=.rtweet_token'")
+  saveRDS(x, ".rtweet_token.rds")
+  Sys.setenv(TWITTER_PAT = ".rtweet_token.rds")
+  complete("Token saved and environment variable set: 'TWITTER_PAT=.rtweet_token.rds'")
   invisible(x)
 }

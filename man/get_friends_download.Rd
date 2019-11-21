@@ -4,31 +4,47 @@
 \alias{get_friends_download}
 \title{Get friends download}
 \usage{
-get_friends_download(x, .fds = NULL, verbose = TRUE, sns = NULL)
+get_friends_download(x, ..., output = NULL, verbose = TRUE)
 }
 \arguments{
-\item{x}{A vector of user IDs or screen names for which friends lists will be
-retrieved. See details for more information about how this works.}
+\item{x}{Either a data frame or character vector containing user identifiers
+for which friends IDs will be retrieved. See details for more information
+about how this works.}
 
-\item{.fds}{Optionally supply a preexisting output vector (like that returned
+\item{...}{If \code{x} is a data frame this can be used to select columns
+containing the appropriate user identifying information (user_id and/or
+screen_name). This uses the tidyselect specification. If \code{x} is a
+character vector, then the first unnamed or non-argument named value is
+assumed to be labels (screen names) corresponding with \code{x}.}
+
+\item{output}{Optionally supply a preexisting output vector (like that returned
 by this function)–if NULL, the default, this function will start fresh.}
 
 \item{verbose}{Whether the function should print information/status updates,
 defaults to TRUE. Setting this to FALSE will silent most printing.}
 }
 \value{
-Returns a list data frames with user and friend ID information
+Returns a list data frames with user and friend ID information. See
+\code{\link[rtweet]{get_friends}} for more information.
 }
 \description{
-Automate friends-list collection for a large number of users (via
-\code{\link[rtweet]{get_friends()}})
+Automate the collection of friend IDs for a large number of users (via
+\code{\link[rtweet]{get_friends}})
 }
 \details{
-This function attempts to retrieve friends lists for 15-30 users
-every 15 minutes, sleeping between calls until Twitter's API rate limit
-resets. If your API token is linked to your own Twitter APP and has
+This function attempts to retrieve friends IDs for as many as 15 to
+30 users every 15 minutes, sleeping between calls until Twitter's API rate
+limit resets. If your API token is linked to your own Twitter APP and has
 appropriate permissions to create a 'bearer token', then this function will
 make 30 calls every 15 minutes. If the token cannot be used via bearer
 authorization, then 15 calls are made every 15 minutes.
+
+It's worth noting that 15 calls does not mean 15 complete friend IDs.
+Twitter limits the number of returned friends returned by a single call to
+5,000, which is more friends than 95% of Twitter users, but at times is
+frustrating because some users like Senator Amy Klobuchar follow over
+170,000 accounts–that many accounts can take 45 mintues to collect! It's
+interesting, though, that Amy Klobuchar is also unusually prolific in both
+following Twitter users and writing/sponsoring legislation.
 }
-\concept{.fds}
+\concept{friends}

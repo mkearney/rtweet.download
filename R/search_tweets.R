@@ -1,15 +1,15 @@
 #' Search tweets download
 #'
 #' Automate the data collection for large Twitter searches (via
-#' \code{\link[rtweet]{search_tweets()}})
+#' \code{\link[rtweet]{search_tweets}})
 #'
 #' @param q Search query to be used to find matching tweets from the past 6-9
-#'   days. See \code{\link[rtweet]{search_tweets()}}) for more information on
+#'   days. See \code{\link[rtweet]{search_tweets}}) for more information on
 #'   Twitter search query syntax.
 #' @param n Number of desired tweets to return. See details for more information
 #'   about relevant rate limits.
 #' @param ... Other parameters are passed to
-#'   \code{\link[rtweet]{search_tweets()}}).
+#'   \code{\link[rtweet]{search_tweets}}).
 #' @param .stw Optionally supply a preexisting output vector (like that returned
 #'   by this function)–if NULL, the default, this function will start fresh.
 #' @return Returns a list data frames of search data

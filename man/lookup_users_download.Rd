@@ -18,7 +18,7 @@ Returns a list data frames of user data
 }
 \description{
 Automate users data collection for a large number of users (via
-\code{\link[rtweet]{lookup_users()}})
+\code{\link[rtweet]{lookup_users}})
 }
 \details{
 This function attempts to lookup data for 90,000 users every 15

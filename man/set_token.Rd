@@ -30,6 +30,6 @@ Stores Twitter API token information for the duration of the session
 #pat <- "/path/to/rtweet-token.rds"
 
 ## and then set the token for use for the remainder of the session
-set_token(pat)
+#set_token(pat)
 
 }

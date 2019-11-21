@@ -9,7 +9,7 @@
 \if{html}{\figure{logo.png}{options: align='right'}}
 
 Robust tools for automating large and/or time-consuming tasks
-    involving the collection of Twitter data via 'rtweet' <https://rtweet.info>
+    involving the collection of Twitter data via 'rtweet' <https://rtweet.info>.
 }
 \seealso{
 Useful links:

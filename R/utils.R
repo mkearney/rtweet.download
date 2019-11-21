@@ -73,19 +73,6 @@ cint <- function(x, f = "1") {
 }
 repc <- function(x, n, collapse = "") paste(rep(x, n), collapse = collapse)
 
-
-assert_that <- function(..., env = parent.frame(), msg = NULL) {
-  res <- see_if(..., env = env, msg = msg)
-  if (res) return(TRUE)
-
-  stop(assert_error(attr(res, "msg")))
-}
-
-assert_error <- function (message, call = NULL) {
-  class <- c("assert_error", "simpleError", "error", "condition")
-  structure(list(message = message, call = call), class = class)
-}
-
 capture_dots <- function(...) {
   eval(substitute(alist(...)), envir = parent.frame())
 }

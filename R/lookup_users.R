@@ -1,7 +1,7 @@
 #' Lookup users download
 #'
 #' Automate users data collection for a large number of users (via
-#' \code{\link[rtweet]{lookup_users()}})
+#' \code{\link[rtweet]{lookup_users}})
 #'
 #' @param x A vector of user IDs or screen names for which data will be looked up.
 #'   See details for more information about how this works.
@@ -27,7 +27,7 @@ lookup_users_download <- function(x, .usr = NULL) {
     }
     if (any(dr)) {
       x <- x[!dr]
-      check("Omit ", cint(sum(dr)), " users already collected")
+      complete("Omit ", cint(sum(dr)), " users already collected")
     }
   }
   tusrs <- length(x)

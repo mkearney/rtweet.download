@@ -73,6 +73,10 @@ determine_token_ <- function(token, query) {
   token
 }
 
+has_bearer <- function(token) {
+  isTRUE("bearer" %in% names(token))
+}
+
 prep_tokens <- function(token) {
   token <- add_bearable_attr(token)
   if (!is_bearable(token)) {

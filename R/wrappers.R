@@ -81,3 +81,5 @@ search_tweets_warning_nap <- fun_warning_nap("search_tweets", "search_tweets", 5
 get_timeline_warning_nap  <- fun_warning_nap("get_timeline",  "get_timeline2",  5)
 
 get_favorites_warning_nap <- fun_warning_nap("get_favorites", "get_favorites2", 5)
+
+lookup_users_warning_nap <- fun_warning_nap("lookup_users", "lookup_users", 5)
