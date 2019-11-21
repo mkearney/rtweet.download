@@ -8,11 +8,15 @@ determine_token <- function(token, query) {
       return(token)
     }
     if (token[["next_token"]] == "bearer") {
-      token[["next_token"]] <- "bearer"
+      token[["token"]] <- "bearer"
+      token[["next_token"]] <- "user"
       return(token)
     }
+    ## if only user token, then don't need to change anything
     return(token)
   }
+
+
   ## if not bearable, then just use the one
   if (!"bearer" %in% names(token)) {
     token[["token"]]      <- token[["user"]]
