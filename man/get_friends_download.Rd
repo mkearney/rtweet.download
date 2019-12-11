@@ -41,7 +41,7 @@ authorization, then 15 calls are made every 15 minutes.
 
 It's worth noting that 15 calls does not mean 15 complete friend IDs.
 Twitter limits the number of returned friends returned by a single call to
-5,000, which is more friends than 95% of Twitter users, but at times is
+5,000, which is more friends than 95\% of Twitter users, but at times is
 frustrating because some users like Senator Amy Klobuchar follow over
 170,000 accounts–that many accounts can take 45 mintues to collect! It's
 interesting, though, that Amy Klobuchar is also unusually prolific in both

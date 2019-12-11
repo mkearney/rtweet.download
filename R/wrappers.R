@@ -3,7 +3,7 @@ run_it_back <- function(.f, .times = 3L) {
     .i <- 0L
     while (
       is.null(x <- tryCatch(', .f, '(...), error = function(e) NULL)) &&
-        .i <= .times
+        .i <= ', .times, '
     ) {
       .i <- .i + 1L
       Sys.sleep(1.5)
@@ -74,12 +74,12 @@ fun_warning_nap <- function(.fn, .f, iter = 5, nap = 30) {
 
 get_friends_warning_nap   <- fun_warning_nap("get_friends",   "get_friends",   5)
 
-get_followers_warning_nap <- fun_warning_nap("get_followers", "get_followers2", 5)
+get_followers_warning_nap <- fun_warning_nap("get_followers", "get_followers", 5)
 
 search_tweets_warning_nap <- fun_warning_nap("search_tweets", "search_tweets", 5)
 
-get_timeline_warning_nap  <- fun_warning_nap("get_timeline",  "get_timeline2",  5)
+get_timeline_warning_nap  <- fun_warning_nap("get_timeline",  "get_timeline",  5)
 
-get_favorites_warning_nap <- fun_warning_nap("get_favorites", "get_favorites2", 5)
+get_favorites_warning_nap <- fun_warning_nap("get_favorites", "get_favorites", 5)
 
 lookup_users_warning_nap <- fun_warning_nap("lookup_users", "lookup_users", 5)

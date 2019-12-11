@@ -6,7 +6,7 @@
 \alias{rtweet.download-package}
 \title{rtweet.download: Automate Large Downloads with 'rtweet'}
 \description{
-\if{html}{\figure{logo.png}{options: align='right'}}
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
 Robust tools for automating large and/or time-consuming tasks
     involving the collection of Twitter data via 'rtweet' <https://rtweet.info>.
@@ -20,7 +20,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Michael W. Kearney \email{kearneymw@missouri.edu} (0000-0002-0730-4694)
+\strong{Maintainer}: Michael W. Kearney \email{kearneymw@missouri.edu} (\href{https://orcid.org/0000-0002-0730-4694}{ORCID})
 
 }
 \keyword{internal}

@@ -1,6 +1,6 @@
 nap_wait <- function(s) {
   pb <- progress::progress_bar$new(
-    format = crayon::blue("Sleep until rate limit reset [:bar] :eta"),
+    format = crayon::blue("Waiting on rate limit [:bar] :eta"),
     total = 500, clear = TRUE, width = 60)
   pb$tick(0)
   for (i in seq_len(500)) {

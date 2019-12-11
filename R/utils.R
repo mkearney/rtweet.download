@@ -1,4 +1,12 @@
-
+pgray <- function(x) {
+  crayon::make_style("#444444")(x)
+}
+pgold <- function(x) {
+  crayon::make_style("#884400")(x)
+}
+pblue <- function(x) {
+  crayon::make_style("#001199")(x)
+}
 complete <- function(..., fill = TRUE) {
   cat(paste0(crayon::green(clisymbols::symbol$tick), " ", ...), fill = fill)
 }
@@ -118,4 +126,8 @@ not_token <- function(x) is.list(x) && !is_bearable(x) && !is_usertoken(x)
 
 n_row <- function(...) {
   NROW(tryCatch(..., error = function(e) NULL))
+}
+
+dots1 <- function(...) {
+  tryCatch(list(...)[[1]], error = function(e) NULL)
 }

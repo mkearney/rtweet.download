@@ -4,24 +4,33 @@
 \alias{lookup_users_download}
 \title{Lookup users download}
 \usage{
-lookup_users_download(x, .usr = NULL)
+lookup_users_download(x, output = NULL, verbose = TRUE)
 }
 \arguments{
-\item{x}{A vector of user IDs or screen names for which data will be looked up.
-See details for more information about how this works.}
+\item{x}{Either a data frame or character vector containing user identifiers
+for which users will be retrieved. See details for more information
+about how this works.}
 
-\item{.usr}{Optionally supply a preexisting output vector (like that returned
+\item{output}{Optionally supply a preexisting output vector (like that returned
 by this function)–if NULL, the default, this function will start fresh.}
+
+\item{verbose}{Whether the function should print information/status updates,
+defaults to TRUE. Setting this to FALSE will silent most printing.}
 }
 \value{
-Returns a list data frames of user data
+Returns a list data frames with looked up user information. See
+\code{\link[rtweet]{lookup_users}} for more information.
 }
 \description{
 Automate users data collection for a large number of users (via
 \code{\link[rtweet]{lookup_users}})
 }
 \details{
-This function attempts to lookup data for 90,000 users every 15
-minutes, sleeping between calls until Twitter's API rate limit resets.
+This function attempts to lookup users information for as many as
+90,000 users every 15 minutes, sleeping between calls until Twitter's API
+rate limit resets.
+
+It's worth noting that information on many users will not be returned due
+to changed screen names, account suspensions, deactivations, etc.
 }
-\concept{.usr}
+\concept{users}
